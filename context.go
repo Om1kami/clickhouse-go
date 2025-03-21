@@ -205,7 +205,9 @@ func queryOptions(ctx context.Context) QueryOptions {
 	}
 
 	if sec := time.Until(deadline).Seconds(); sec > 1 {
-		opt.settings["max_execution_time"] = int(sec + 5)
+		if _, ok = opt.settings["max_execution_time"]; !ok {
+			opt.settings["max_execution_time"] = int(sec + 5)
+		}
 	}
 
 	return opt
